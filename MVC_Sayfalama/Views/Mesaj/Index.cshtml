@@ -1,0 +1,88 @@
+﻿@model PagedList.IPagedList<MVC_Sayfalama.Models.mesaj>
+@using PagedList.Mvc;
+@using PagedList;
+
+@{
+    ViewBag.Title = "Ana Sayfa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Kayıtlar</h2>
+<hr />
+@Html.ActionLink("Kayıt Ekle", "Create", "Mesaj", new { id=UrlParameter.Optional})
+<hr />
+<table>
+    <tr>
+
+        <th>
+            Kayıt Başlik
+        </th>
+        <th>
+            Kayıt İçerik
+        </th>
+        <th>
+            Kaydı Düzenle
+        </th>
+        <th>
+            Kayıt Detay
+        </th>
+        <th>
+            Kayıt Sil
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr style="width:130px" align="left">
+
+            <td style="width:110px" align="left">
+                @Html.DisplayFor(modelItem => item.baslik)
+            </td>
+
+            <td style="width:110px" align="left">
+                @Html.DisplayFor(modelItem => item.icerik)
+            </td>
+            <td style="width:120px" align="left">
+                @Html.ActionLink("Düzenle", "Edit", new { id = item.id })
+            </td>
+            <td style="width:100px" align="left">
+                @Html.ActionLink("Detay", "Details", new { id = item.id })
+            </td>
+            <td style="width:80px" align="left">
+                @Html.ActionLink("Sil", "Delete", new { id = item.id })
+            </td>
+   
+        </tr>
+
+    }
+
+    </table>
+
+    <hr />
+
+    <h3>Varsayılan sayfalama</h3>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+    <div class="t"></div>
+
+    <h3>Önceki, Sonraki</h3>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), PagedListRenderOptions.Minimal)
+        <div class="t"></div>
+
+        <h3>Önceki, Sonraki ve hangi sayfadasınız</h3>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), PagedListRenderOptions.MinimalWithPageCountText)
+        <div class="t"></div>
+
+        <h3>Önceki, Sonraki ve hangi sayfadasınız. Toplam kayıt sayısı</h3>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), PagedListRenderOptions.MinimalWithItemCountText)
+        <div class="t"></div>
+
+        <h3>Sayfa numaraları</h3>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), PagedListRenderOptions.PageNumbersOnly)
+        <div class="t"></div>
+
+        <h3>Önceki, sonraki ve sayfa numaraları</h3>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page + 1 }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+        <div class="t"></div>
+
+
+        <h3>Kişiselleştirilmiş sayfalama</h3>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), new PagedListRenderOptions { LinkToFirstPageFormat = "<< İlk", LinkToPreviousPageFormat = "< Önceki", LinkToNextPageFormat = "Sonraki >", LinkToLastPageFormat = "Son >>" })

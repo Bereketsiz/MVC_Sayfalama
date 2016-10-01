@@ -1,0 +1,3 @@
+﻿PM> install-package EntityFramework
+
+komutu NuGet ten girip EntiitFramework ün yüklenmesini sağlıyoruz.
